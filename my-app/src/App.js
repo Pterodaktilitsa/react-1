@@ -1,34 +1,12 @@
-import logo from './logo.svg'; //декларативный
-import './App.css';
-import React from 'react';
+import { MyComponent } from './MyComponent';
+import styles from './App.module.css';
 
-const newYear = new Date(); //императивный
 export const App = () => {
-	return React.createElement(
-		'div',
-		{ className: 'App' },
-		React.createElement(
-			'header',
-			{ className: 'App-header' },
-			React.createElement('img', { src: logo, className: 'App-logo', alt: 'logo' }),
-			React.createElement(
-				'p',
-				null,
-				'Edit ',
-				React.createElement('code', null, 'src/App.js'),
-				' and save to reload.',
-			),
-			React.createElement(
-				'a',
-				{
-					className: 'App-link',
-					href: 'https://reactjs.org',
-					target: '_blank',
-					rel: 'noopener noreferrer',
-				},
-				'Learn React',
-			),
-			React.createElement('p', null, newYear.getFullYear()),
-		),
+	return (
+		<div className={styles.app}>
+			<header className={styles.header}>
+				<MyComponent />
+			</header>
+		</div>
 	);
 };
