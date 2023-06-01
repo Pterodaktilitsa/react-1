@@ -7,7 +7,8 @@ export const App = () => {
 
 	const ops = ['+', '-'];
 	const updateCalc = (value) => {
-		setCalc(calc + value);
+		if ((ops.includes(value) && calc === '') || (ops.includes(value) && ops.includes))
+			setCalc(calc + value);
 	};
 	const createDigits = () => {
 		const digits = [];
