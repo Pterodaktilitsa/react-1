@@ -3,13 +3,8 @@ import styles from './App.module.css';
 
 export const App = () => {
 	const [calc, setCalc] = useState('');
-	const [result, setResult] = useState('');
+	let [isResult, setIsResult] = useState(false);
 
-	const ops = ['+', '-'];
-	const updateCalc = (value) => {
-		if ((ops.includes(value) && calc === '') || (ops.includes(value) && ops.includes))
-			setCalc(calc + value);
-	};
 	const createDigits = () => {
 		const digits = [];
 		for (let i = 1; i < 10; i++) {
@@ -19,25 +14,48 @@ export const App = () => {
 				</button>,
 			);
 		}
+		digits.push(
+			<button onClick={() => updateCalc('0')} key={0}>
+				0
+			</button>,
+		);
 		return digits;
 	};
+
+	const calcResult = () => {
+		setIsResult(true);
+
+		const result = eval(calc);
+		setCalc(result ? result : '');
+	};
+
+	const updateCalc = (value) => {
+		setIsResult(false);
+
+		if (!value) {
+			setCalc('');
+		} else {
+			setCalc((previousState) =>
+				previousState !== '' ? previousState + value : value,
+			);
+		}
+	};
+
+	const cssClasses = [styles.display, isResult ? styles.resulted : ' '];
+
 	return (
 		<div className={styles.app}>
-			<div className="calculator">
-				<div className="display">
-					{result ? <span>(0)</span> : ''} {calc || '0'}
-				</div>
+			<div className={styles.calculator}>
+				<div className={cssClasses.join(' ')}>{calc ? calc : '0'}</div>
 
-				<div className="operators">
+				<div className={styles.operators}>
 					<button onClick={() => updateCalc('+')}>+</button>
 					<button onClick={() => updateCalc('-')}>-</button>
-					<button onClick={() => updateCalc('=')}>=</button>
-					<button>C</button>
+					<button onClick={calcResult}>=</button>
+					<button onClick={() => updateCalc('')}>C</button>
 				</div>
-				<div className="digits">
-					{createDigits()}
-					<button onClick={() => updateCalc('0')}>0</button>
-				</div>
+
+				<div className={styles.digits}>{createDigits()}</div>
 			</div>
 		</div>
 	);
